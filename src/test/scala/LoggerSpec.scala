@@ -15,9 +15,9 @@
  */
 package com.weiglewilczek.slf4s
 
-import org.slf4j.{ Logger => SLF4JLogger }
-import org.specs.Specification
 import org.specs.mock.Mockito
+import org.slf4j.{Marker, Logger => SLF4JLogger}
+import org.specs.Specification
 
 class LoggerSpec extends Specification with Mockito {
 
@@ -41,7 +41,7 @@ class LoggerSpec extends Specification with Mockito {
     }
 
     "throw an IAE when creating a Logger with a null String" in {
-      Logger(null: String) must throwA [IllegalArgumentException]
+      Logger(null: String) must throwA[IllegalArgumentException]
     }
   }
 
@@ -68,6 +68,29 @@ class LoggerSpec extends Specification with Mockito {
     }
   }
 
+  "Calling Logger.error(marker, msg)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.error when error not enabled" in {
+      slf4jLogger.isErrorEnabled(marker) returns false
+      logger.error(marker, msg)
+      there was no(slf4jLogger).error(marker, Msg)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.error when error enabled" in {
+      slf4jLogger.isErrorEnabled(marker) returns true
+      logger.error(marker, msg)
+      there was one(slf4jLogger).error(marker, Msg)
+      evaluated mustBe true
+    }
+  }
+
   "Calling Logger.error(msg, t)" should {
     val (logger, slf4jLogger) = loggers
     var evaluated = false
@@ -86,7 +109,30 @@ class LoggerSpec extends Specification with Mockito {
     "call SLF4JLogger.error when error enabled" in {
       slf4jLogger.isErrorEnabled returns true
       logger.error(msg, t)
-      there was one(slf4jLogger).error(Msg ,t)
+      there was one(slf4jLogger).error(Msg, t)
+      evaluated mustBe true
+    }
+  }
+
+  "Calling Logger.error(marker, msg, t)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.error when error not enabled" in {
+      slf4jLogger.isErrorEnabled(marker) returns false
+      logger.error(marker, msg, t)
+      there was no(slf4jLogger).error(marker, Msg, t)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.error when error enabled" in {
+      slf4jLogger.isErrorEnabled(marker) returns true
+      logger.error(marker, msg, t)
+      there was one(slf4jLogger).error(marker, Msg, t)
       evaluated mustBe true
     }
   }
@@ -114,6 +160,29 @@ class LoggerSpec extends Specification with Mockito {
     }
   }
 
+  "Calling Logger.warn(marker, msg)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.warn when warn not enabled" in {
+      slf4jLogger.isWarnEnabled(marker) returns false
+      logger.warn(marker, msg)
+      there was no(slf4jLogger).warn(marker, Msg)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.warn when warn enabled" in {
+      slf4jLogger.isWarnEnabled(marker) returns true
+      logger.warn(marker, msg)
+      there was one(slf4jLogger).warn(marker, Msg)
+      evaluated mustBe true
+    }
+  }
+
   "Calling Logger.warn(msg, t)" should {
     val (logger, slf4jLogger) = loggers
     var evaluated = false
@@ -132,7 +201,30 @@ class LoggerSpec extends Specification with Mockito {
     "call SLF4JLogger.warn when warn enabled" in {
       slf4jLogger.isWarnEnabled returns true
       logger.warn(msg, t)
-      there was one(slf4jLogger).warn(Msg ,t)
+      there was one(slf4jLogger).warn(Msg, t)
+      evaluated mustBe true
+    }
+  }
+
+  "Calling Logger.warn(marker, msg, t)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.warn when warn not enabled" in {
+      slf4jLogger.isWarnEnabled(marker) returns false
+      logger.warn(marker, msg, t)
+      there was no(slf4jLogger).warn(marker, Msg, t)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.warn when warn enabled" in {
+      slf4jLogger.isWarnEnabled(marker) returns true
+      logger.warn(marker, msg, t)
+      there was one(slf4jLogger).warn(marker, Msg, t)
       evaluated mustBe true
     }
   }
@@ -160,6 +252,29 @@ class LoggerSpec extends Specification with Mockito {
     }
   }
 
+  "Calling Logger.info(marker, msg)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.info when info not enabled" in {
+      slf4jLogger.isInfoEnabled(marker) returns false
+      logger.info(marker, msg)
+      there was no(slf4jLogger).info(marker, Msg)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.info when info enabled" in {
+      slf4jLogger.isInfoEnabled(marker) returns true
+      logger.info(marker, msg)
+      there was one(slf4jLogger).info(marker, Msg)
+      evaluated mustBe true
+    }
+  }
+
   "Calling Logger.info(msg, t)" should {
     val (logger, slf4jLogger) = loggers
     var evaluated = false
@@ -179,6 +294,29 @@ class LoggerSpec extends Specification with Mockito {
       slf4jLogger.isInfoEnabled returns true
       logger.info(msg, t)
       there was one(slf4jLogger).info(Msg, t)
+      evaluated mustBe true
+    }
+  }
+
+  "Calling Logger.info(marker, msg, t)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.info when info not enabled" in {
+      slf4jLogger.isInfoEnabled(marker) returns false
+      logger.info(marker, msg, t)
+      there was no(slf4jLogger).info(marker, Msg, t)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.info when info enabled" in {
+      slf4jLogger.isInfoEnabled(marker) returns true
+      logger.info(marker, msg, t)
+      there was one(slf4jLogger).info(marker, Msg, t)
       evaluated mustBe true
     }
   }
@@ -206,6 +344,29 @@ class LoggerSpec extends Specification with Mockito {
     }
   }
 
+  "Calling Logger.debug(marker, msg)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.debug when debug not enabled" in {
+      slf4jLogger.isDebugEnabled(marker) returns false
+      logger.debug(marker, msg)
+      there was no(slf4jLogger).debug(marker, Msg)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.debug when debug enabled" in {
+      slf4jLogger.isDebugEnabled(marker) returns true
+      logger.debug(marker, msg)
+      there was one(slf4jLogger).debug(marker, Msg)
+      evaluated mustBe true
+    }
+  }
+
   "Calling Logger.debug(msg ,t)" should {
     val (logger, slf4jLogger) = loggers
     var evaluated = false
@@ -225,6 +386,29 @@ class LoggerSpec extends Specification with Mockito {
       slf4jLogger.isDebugEnabled returns true
       logger.debug(msg, t)
       there was one(slf4jLogger).debug(Msg, t)
+      evaluated mustBe true
+    }
+  }
+
+  "Calling Logger.debug(marker, msg ,t)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.debug when debug not enabled" in {
+      slf4jLogger.isDebugEnabled(marker) returns false
+      logger.debug(marker, msg, t)
+      there was no(slf4jLogger).debug(marker, Msg, t)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.debug when debug enabled" in {
+      slf4jLogger.isDebugEnabled(marker) returns true
+      logger.debug(marker, msg, t)
+      there was one(slf4jLogger).debug(marker, Msg, t)
       evaluated mustBe true
     }
   }
@@ -252,6 +436,29 @@ class LoggerSpec extends Specification with Mockito {
     }
   }
 
+  "Calling Logger.trace(marker, msg)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.trace when trace not enabled" in {
+      slf4jLogger.isTraceEnabled(marker) returns false
+      logger.trace(marker, msg)
+      there was no(slf4jLogger).trace(marker, Msg)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.trace when trace enabled" in {
+      slf4jLogger.isTraceEnabled(marker) returns true
+      logger.trace(marker, msg)
+      there was one(slf4jLogger).trace(marker, Msg)
+      evaluated mustBe true
+    }
+  }
+
   "Calling Logger.trace(msg, t)" should {
     val (logger, slf4jLogger) = loggers
     var evaluated = false
@@ -275,9 +482,34 @@ class LoggerSpec extends Specification with Mockito {
     }
   }
 
+  "Calling Logger.trace(marker, msg, t)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.trace when trace not enabled" in {
+      slf4jLogger.isTraceEnabled(marker) returns false
+      logger.trace(marker, msg, t)
+      there was no(slf4jLogger).trace(marker, Msg, t)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.trace when trace enabled" in {
+      slf4jLogger.isTraceEnabled(marker) returns true
+      logger.trace(marker, msg, t)
+      there was one(slf4jLogger).trace(marker, Msg, t)
+      evaluated mustBe true
+    }
+  }
+
   private lazy val Msg = "MESSAGE"
 
   private lazy val t = new Throwable
+
+  private lazy val marker = mock[Marker]
 
   private def loggers = {
     val mockSLF4JLogger = mock[SLF4JLogger]
