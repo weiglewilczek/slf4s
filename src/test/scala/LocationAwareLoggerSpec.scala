@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 package com.weiglewilczek.slf4s
-import org.slf4j.spi.{LocationAwareLogger=>SLF4JLocationAwareLogger}
+
+import org.slf4j.spi.{LocationAwareLogger => SLF4JLocationAwareLogger}
 import org.slf4j.spi.LocationAwareLogger.{ERROR_INT, WARN_INT, INFO_INT, DEBUG_INT, TRACE_INT}
 import org.specs.Specification
 import org.specs.mock.Mockito
+import org.slf4j.Marker
 
 class LocationAwareLoggerSpec extends Specification with Mockito {
 
@@ -40,6 +42,29 @@ class LocationAwareLoggerSpec extends Specification with Mockito {
       slf4jLogger.isErrorEnabled returns true
       logger.error(msg)
       there was one(slf4jLogger).log(null, FQCN, ERROR_INT, Msg, null, null)
+      evaluated mustBe true
+    }
+  }
+
+  "Calling Logger.error(marker, msg)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.log when error not enabled" in {
+      slf4jLogger.isErrorEnabled(marker) returns false
+      logger.error(marker, msg)
+      there was no(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, null)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.log when error enabled" in {
+      slf4jLogger.isErrorEnabled(marker) returns true
+      logger.error(marker, msg)
+      there was one(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, null)
       evaluated mustBe true
     }
   }
@@ -67,6 +92,29 @@ class LocationAwareLoggerSpec extends Specification with Mockito {
     }
   }
 
+  "Calling Logger.error(marker, msg, t)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.log when error not enabled" in {
+      slf4jLogger.isErrorEnabled(marker) returns false
+      logger.error(marker, msg, t)
+      there was no(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, t)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.log when error enabled" in {
+      slf4jLogger.isErrorEnabled(marker) returns true
+      logger.error(marker, msg, t)
+      there was one(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, t)
+      evaluated mustBe true
+    }
+  }
+
   "Calling Logger.warn(msg)" should {
     val (logger, slf4jLogger) = loggers
     var evaluated = false
@@ -86,6 +134,29 @@ class LocationAwareLoggerSpec extends Specification with Mockito {
       slf4jLogger.isWarnEnabled returns true
       logger.warn(msg)
       there was one(slf4jLogger).log(null, FQCN, WARN_INT, Msg, null, null)
+      evaluated mustBe true
+    }
+  }
+
+  "Calling Logger.warn(marker, msg)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.log when warn not enabled" in {
+      slf4jLogger.isWarnEnabled(marker) returns false
+      logger.warn(marker, msg)
+      there was no(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, null)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.log when warn enabled" in {
+      slf4jLogger.isWarnEnabled(marker) returns true
+      logger.warn(marker, msg)
+      there was one(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, null)
       evaluated mustBe true
     }
   }
@@ -113,6 +184,29 @@ class LocationAwareLoggerSpec extends Specification with Mockito {
     }
   }
 
+  "Calling Logger.warn(marker, msg, t)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.log when warn not enabled" in {
+      slf4jLogger.isWarnEnabled(marker) returns false
+      logger.warn(marker, msg, t)
+      there was no(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, t)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.log when warn enabled" in {
+      slf4jLogger.isWarnEnabled(marker) returns true
+      logger.warn(marker, msg, t)
+      there was one(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, t)
+      evaluated mustBe true
+    }
+  }
+
   "Calling Logger.info(msg)" should {
     val (logger, slf4jLogger) = loggers
     var evaluated = false
@@ -132,6 +226,29 @@ class LocationAwareLoggerSpec extends Specification with Mockito {
       slf4jLogger.isInfoEnabled returns true
       logger.info(msg)
       there was one(slf4jLogger).log(null, FQCN, INFO_INT, Msg, null, null)
+      evaluated mustBe true
+    }
+  }
+
+  "Calling Logger.info(marker, msg)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.log when info not enabled" in {
+      slf4jLogger.isInfoEnabled(marker) returns false
+      logger.info(marker, msg)
+      there was no(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, null)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.log when info enabled" in {
+      slf4jLogger.isInfoEnabled(marker) returns true
+      logger.info(marker, msg)
+      there was one(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, null)
       evaluated mustBe true
     }
   }
@@ -159,6 +276,30 @@ class LocationAwareLoggerSpec extends Specification with Mockito {
     }
   }
 
+  "Calling Logger.info(marker, msg, t)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.log when info not enabled" in {
+      slf4jLogger.isInfoEnabled(marker) returns false
+      logger.info(marker, msg, t)
+      there was no(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, t)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.log when info enabled" in {
+      slf4jLogger.isInfoEnabled(marker) returns true
+      logger.info(marker, msg, t)
+      there was one(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, t)
+      evaluated mustBe true
+    }
+  }
+
+
   "Calling Logger.debug(msg)" should {
     val (logger, slf4jLogger) = loggers
     var evaluated = false
@@ -178,6 +319,29 @@ class LocationAwareLoggerSpec extends Specification with Mockito {
       slf4jLogger.isDebugEnabled returns true
       logger.debug(msg)
       there was one(slf4jLogger).log(null, FQCN, DEBUG_INT, Msg, null, null)
+      evaluated mustBe true
+    }
+  }
+
+  "Calling Logger.debug(marker, msg)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.log when debug not enabled" in {
+      slf4jLogger.isDebugEnabled(marker) returns false
+      logger.debug(marker, msg)
+      there was no(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, null)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.log when debug enabled" in {
+      slf4jLogger.isDebugEnabled(marker) returns true
+      logger.debug(marker, msg)
+      there was one(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, null)
       evaluated mustBe true
     }
   }
@@ -205,6 +369,29 @@ class LocationAwareLoggerSpec extends Specification with Mockito {
     }
   }
 
+  "Calling Logger.debug(marker, msg, t)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.log when debug not enabled" in {
+      slf4jLogger.isDebugEnabled(marker) returns false
+      logger.debug(marker, msg, t)
+      there was no(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, t)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.log when debug enabled" in {
+      slf4jLogger.isDebugEnabled(marker) returns true
+      logger.debug(marker, msg, t)
+      there was one(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, t)
+      evaluated mustBe true
+    }
+  }
+
   "Calling Logger.trace(msg)" should {
     val (logger, slf4jLogger) = loggers
     var evaluated = false
@@ -224,6 +411,29 @@ class LocationAwareLoggerSpec extends Specification with Mockito {
       slf4jLogger.isTraceEnabled returns true
       logger.trace(msg)
       there was one(slf4jLogger).log(null, FQCN, TRACE_INT, Msg, null, null)
+      evaluated mustBe true
+    }
+  }
+
+  "Calling Logger.trace(marker, msg)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.log when trace not enabled" in {
+      slf4jLogger.isTraceEnabled(marker) returns false
+      logger.trace(marker, msg)
+      there was no(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, null)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.log when trace enabled" in {
+      slf4jLogger.isTraceEnabled(marker) returns true
+      logger.trace(marker, msg)
+      there was one(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, null)
       evaluated mustBe true
     }
   }
@@ -251,11 +461,36 @@ class LocationAwareLoggerSpec extends Specification with Mockito {
     }
   }
 
+  "Calling Logger.trace(marker, msg, t)" should {
+    val (logger, slf4jLogger) = loggers
+    var evaluated = false
+    def msg = {
+      evaluated = true
+      Msg
+    }
+
+    "not call SLF4JLogger.log when trace not enabled" in {
+      slf4jLogger.isTraceEnabled(marker) returns false
+      logger.trace(marker, msg, t)
+      there was no(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, t)
+      evaluated mustBe false
+    }
+
+    "call SLF4JLogger.log when trace enabled" in {
+      slf4jLogger.isTraceEnabled(marker) returns true
+      logger.trace(marker, msg, t)
+      there was one(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, t)
+      evaluated mustBe true
+    }
+  }
+
   private lazy val Msg = "MESSAGE"
 
   private lazy val t = new Throwable
 
   private lazy val FQCN = classOf[DefaultLocationAwareLogger].getName
+
+  private lazy val marker = mock[Marker]
 
   private def loggers = {
     val mockSLF4JLogger = mock[SLF4JLocationAwareLogger]
