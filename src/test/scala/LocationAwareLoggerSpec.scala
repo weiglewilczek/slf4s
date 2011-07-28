@@ -149,14 +149,14 @@ class LocationAwareLoggerSpec extends Specification with Mockito {
     "not call SLF4JLogger.log when warn not enabled" in {
       slf4jLogger.isWarnEnabled(marker) returns false
       logger.warn(marker, msg)
-      there was no(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, null)
+      there was no(slf4jLogger).log(marker, FQCN, WARN_INT, Msg, null, null)
       evaluated mustBe false
     }
 
     "call SLF4JLogger.log when warn enabled" in {
       slf4jLogger.isWarnEnabled(marker) returns true
       logger.warn(marker, msg)
-      there was one(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, null)
+      there was one(slf4jLogger).log(marker, FQCN, WARN_INT, Msg, null, null)
       evaluated mustBe true
     }
   }
@@ -195,14 +195,14 @@ class LocationAwareLoggerSpec extends Specification with Mockito {
     "not call SLF4JLogger.log when warn not enabled" in {
       slf4jLogger.isWarnEnabled(marker) returns false
       logger.warn(marker, msg, t)
-      there was no(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, t)
+      there was no(slf4jLogger).log(marker, FQCN, WARN_INT, Msg, null, t)
       evaluated mustBe false
     }
 
     "call SLF4JLogger.log when warn enabled" in {
       slf4jLogger.isWarnEnabled(marker) returns true
       logger.warn(marker, msg, t)
-      there was one(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, t)
+      there was one(slf4jLogger).log(marker, FQCN, WARN_INT, Msg, null, t)
       evaluated mustBe true
     }
   }
@@ -241,14 +241,14 @@ class LocationAwareLoggerSpec extends Specification with Mockito {
     "not call SLF4JLogger.log when info not enabled" in {
       slf4jLogger.isInfoEnabled(marker) returns false
       logger.info(marker, msg)
-      there was no(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, null)
+      there was no(slf4jLogger).log(marker, FQCN, INFO_INT, Msg, null, null)
       evaluated mustBe false
     }
 
     "call SLF4JLogger.log when info enabled" in {
       slf4jLogger.isInfoEnabled(marker) returns true
       logger.info(marker, msg)
-      there was one(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, null)
+      there was one(slf4jLogger).log(marker, FQCN, INFO_INT, Msg, null, null)
       evaluated mustBe true
     }
   }
@@ -287,14 +287,14 @@ class LocationAwareLoggerSpec extends Specification with Mockito {
     "not call SLF4JLogger.log when info not enabled" in {
       slf4jLogger.isInfoEnabled(marker) returns false
       logger.info(marker, msg, t)
-      there was no(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, t)
+      there was no(slf4jLogger).log(marker, FQCN, INFO_INT, Msg, null, t)
       evaluated mustBe false
     }
 
     "call SLF4JLogger.log when info enabled" in {
       slf4jLogger.isInfoEnabled(marker) returns true
       logger.info(marker, msg, t)
-      there was one(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, t)
+      there was one(slf4jLogger).log(marker, FQCN, INFO_INT, Msg, null, t)
       evaluated mustBe true
     }
   }
@@ -334,14 +334,14 @@ class LocationAwareLoggerSpec extends Specification with Mockito {
     "not call SLF4JLogger.log when debug not enabled" in {
       slf4jLogger.isDebugEnabled(marker) returns false
       logger.debug(marker, msg)
-      there was no(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, null)
+      there was no(slf4jLogger).log(marker, FQCN, DEBUG_INT, Msg, null, null)
       evaluated mustBe false
     }
 
     "call SLF4JLogger.log when debug enabled" in {
       slf4jLogger.isDebugEnabled(marker) returns true
       logger.debug(marker, msg)
-      there was one(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, null)
+      there was one(slf4jLogger).log(marker, FQCN, DEBUG_INT, Msg, null, null)
       evaluated mustBe true
     }
   }
@@ -380,14 +380,14 @@ class LocationAwareLoggerSpec extends Specification with Mockito {
     "not call SLF4JLogger.log when debug not enabled" in {
       slf4jLogger.isDebugEnabled(marker) returns false
       logger.debug(marker, msg, t)
-      there was no(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, t)
+      there was no(slf4jLogger).log(marker, FQCN, DEBUG_INT, Msg, null, t)
       evaluated mustBe false
     }
 
     "call SLF4JLogger.log when debug enabled" in {
       slf4jLogger.isDebugEnabled(marker) returns true
       logger.debug(marker, msg, t)
-      there was one(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, t)
+      there was one(slf4jLogger).log(marker, FQCN, DEBUG_INT, Msg, null, t)
       evaluated mustBe true
     }
   }
@@ -426,14 +426,14 @@ class LocationAwareLoggerSpec extends Specification with Mockito {
     "not call SLF4JLogger.log when trace not enabled" in {
       slf4jLogger.isTraceEnabled(marker) returns false
       logger.trace(marker, msg)
-      there was no(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, null)
+      there was no(slf4jLogger).log(marker, FQCN, TRACE_INT, Msg, null, null)
       evaluated mustBe false
     }
 
     "call SLF4JLogger.log when trace enabled" in {
       slf4jLogger.isTraceEnabled(marker) returns true
       logger.trace(marker, msg)
-      there was one(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, null)
+      there was one(slf4jLogger).log(marker, FQCN, TRACE_INT, Msg, null, null)
       evaluated mustBe true
     }
   }
@@ -472,14 +472,14 @@ class LocationAwareLoggerSpec extends Specification with Mockito {
     "not call SLF4JLogger.log when trace not enabled" in {
       slf4jLogger.isTraceEnabled(marker) returns false
       logger.trace(marker, msg, t)
-      there was no(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, t)
+      there was no(slf4jLogger).log(marker, FQCN, TRACE_INT, Msg, null, t)
       evaluated mustBe false
     }
 
     "call SLF4JLogger.log when trace enabled" in {
       slf4jLogger.isTraceEnabled(marker) returns true
       logger.trace(marker, msg, t)
-      there was one(slf4jLogger).log(marker, FQCN, ERROR_INT, Msg, null, t)
+      there was one(slf4jLogger).log(marker, FQCN, TRACE_INT, Msg, null, t)
       evaluated mustBe true
     }
   }

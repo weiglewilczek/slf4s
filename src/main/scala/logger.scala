@@ -286,7 +286,7 @@ trait LocationAwareLogger extends Logger {
   }
 
   override def warn(marker: Marker, msg: => String) {
-    if (slf4jLogger.isWarnEnabled(marker)) log(ERROR_INT, msg, marker = marker)
+    if (slf4jLogger.isWarnEnabled(marker)) log(WARN_INT, msg, marker = marker)
   }
 
   override def warn(msg: => String, t: Throwable) {
@@ -294,7 +294,7 @@ trait LocationAwareLogger extends Logger {
   }
 
   override def warn(marker: Marker, msg: => String, t: Throwable) {
-    if (slf4jLogger.isWarnEnabled(marker)) log(ERROR_INT, msg, marker = marker, throwable = t)
+    if (slf4jLogger.isWarnEnabled(marker)) log(WARN_INT, msg, marker = marker, throwable = t)
   }
 
   override def info(msg: => String) {
@@ -302,7 +302,7 @@ trait LocationAwareLogger extends Logger {
   }
 
   override def info(marker: Marker, msg: => String) {
-    if (slf4jLogger.isInfoEnabled(marker)) log(ERROR_INT, msg, marker = marker)
+    if (slf4jLogger.isInfoEnabled(marker)) log(INFO_INT, msg, marker = marker)
   }
 
   override def info(msg: => String, t: Throwable) {
@@ -310,7 +310,7 @@ trait LocationAwareLogger extends Logger {
   }
 
   override def info(marker: Marker, msg: => String, t: Throwable) {
-    if (slf4jLogger.isInfoEnabled(marker)) log(ERROR_INT, msg, marker = marker, throwable = t)
+    if (slf4jLogger.isInfoEnabled(marker)) log(INFO_INT, msg, marker = marker, throwable = t)
   }
 
   override def debug(msg: => String) {
@@ -318,7 +318,7 @@ trait LocationAwareLogger extends Logger {
   }
 
   override def debug(marker: Marker, msg: => String) {
-    if (slf4jLogger.isDebugEnabled(marker)) log(ERROR_INT, msg, marker = marker)
+    if (slf4jLogger.isDebugEnabled(marker)) log(DEBUG_INT, msg, marker = marker)
   }
 
   override def debug(msg: => String, t: Throwable) {
@@ -326,7 +326,7 @@ trait LocationAwareLogger extends Logger {
   }
 
   override def debug(marker: Marker, msg: => String, t: Throwable) {
-    if (slf4jLogger.isDebugEnabled(marker)) log(ERROR_INT, msg, marker = marker, throwable = t)
+    if (slf4jLogger.isDebugEnabled(marker)) log(DEBUG_INT, msg, marker = marker, throwable = t)
   }
 
   override def trace(msg: => String) {
@@ -334,7 +334,7 @@ trait LocationAwareLogger extends Logger {
   }
 
   override def trace(marker: Marker, msg: => String) {
-    if (slf4jLogger.isTraceEnabled(marker)) log(ERROR_INT, msg, marker = marker)
+    if (slf4jLogger.isTraceEnabled(marker)) log(TRACE_INT, msg, marker = marker)
   }
 
   override def trace(msg: => String, t: Throwable) {
@@ -342,7 +342,7 @@ trait LocationAwareLogger extends Logger {
   }
 
   override def trace(marker: Marker, msg: => String, t: Throwable) {
-    if (slf4jLogger.isTraceEnabled(marker)) log(ERROR_INT, msg, marker = marker, throwable = t)
+    if (slf4jLogger.isTraceEnabled(marker)) log(TRACE_INT, msg, marker = marker, throwable = t)
   }
 
   override protected val slf4jLogger: Slf4jLocationAwareLogger
