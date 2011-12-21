@@ -3,7 +3,7 @@ organization := "com.weiglewilczek.slf4s"
 
 name := "slf4s"
 
-version := "1.0.7-drstevens-1"
+version := "1.0.7-drstevens-2-SNAPSHOT"
 
 scalaVersion := "2.9.1"
 
