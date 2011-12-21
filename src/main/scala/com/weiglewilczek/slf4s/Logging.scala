@@ -1,5 +1,7 @@
+package com.weiglewilczek.slf4s
+
 /*
-* Copyright 2011 Weigle Wilczek GmbH
+* Copyright 2010-2011 Weigle Wilczek GmbH
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -13,13 +15,13 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package test
+/**
+ * Mixin providing a Logger for the type mixed into.
+ */
+trait Logging {
 
-import com.weiglewilczek.slf4s.Logging
-
-object TestRunner extends Logging {
-
-  def main(args: Array[String]) {
-    logger.info("test")
-  }
+  /**
+   * Logger for the type mixed into.
+   */
+  protected[slf4s] lazy val logger = Logger(this.getClass)
 }

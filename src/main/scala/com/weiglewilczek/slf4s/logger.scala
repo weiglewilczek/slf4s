@@ -1,19 +1,20 @@
-/*
- * Copyright 2010-2011 Weigle Wilczek GmbH
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.weiglewilczek.slf4s
+
+/*
+* Copyright 2010-2011 Weigle Wilczek GmbH
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*    http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 import org.slf4j.spi.{LocationAwareLogger => Slf4jLocationAwareLogger}
 import org.slf4j.{Marker, Logger => Slf4jLogger, LoggerFactory}
@@ -58,6 +59,11 @@ trait Logger {
    * The name of this Logger.
    */
   lazy val name = slf4jLogger.getName
+
+  /**
+   * The wrapped SLF4J Logger.
+   */
+  protected val slf4jLogger: Slf4jLogger
 
   /**
    * Log a message with ERROR level.
@@ -233,8 +239,7 @@ trait Logger {
   }
 
   /**
-   * This method is similar to {@link #trace(String, Throwable)} method except that the
-   * marker data is also taken into consideration.
+   * Log a message with TRACE level.
    *
    * @param marker the marker data specific to this log statement
    * @param msg the message accompanying the exception
@@ -243,14 +248,9 @@ trait Logger {
   def trace(marker: Marker, msg: => String, t: Throwable) {
     if (slf4jLogger.isTraceEnabled(marker)) slf4jLogger.trace(marker, msg, t)
   }
-
-  /**
-   * The wrapped SLF4J Logger.
-   */
-  protected val slf4jLogger: Slf4jLogger
 }
 
-private[slf4s] class DefaultLogger(override protected val slf4jLogger: Slf4jLogger) extends Logger
+private[slf4s] final class DefaultLogger(override protected val slf4jLogger: Slf4jLogger) extends Logger
 
 /**
  * Thin wrapper for a location aware SLF4J logger making use of by-name parameters to improve performance.
@@ -264,6 +264,14 @@ private[slf4s] class DefaultLogger(override protected val slf4jLogger: Slf4jLogg
 trait LocationAwareLogger extends Logger {
 
   import Slf4jLocationAwareLogger.{ERROR_INT, WARN_INT, INFO_INT, DEBUG_INT, TRACE_INT}
+
+  override protected val slf4jLogger: Slf4jLocationAwareLogger
+
+  /**
+   * Get the wrapper class name for detection of the stackframe of the user code calling into the log framework.
+   * @return The fully qualified class name of the outermost logger wrapper class.
+   */
+  protected val wrapperClassName: String
 
   override def error(msg: => String) {
     if (slf4jLogger.isErrorEnabled) log(ERROR_INT, msg)
@@ -344,14 +352,6 @@ trait LocationAwareLogger extends Logger {
   override def trace(marker: Marker, msg: => String, t: Throwable) {
     if (slf4jLogger.isTraceEnabled(marker)) log(TRACE_INT, msg, marker = marker, throwable = t)
   }
-
-  override protected val slf4jLogger: Slf4jLocationAwareLogger
-
-  /**
-   * Get the wrapper class name for detection of the stackframe of the user code calling into the log framework.
-   * @return The fully qualified class name of the outermost logger wrapper class.
-   */
-  protected val wrapperClassName: String
 
   private final def log(level: Int, msg: String, marker: Marker = null, throwable: Throwable = null) {
     slf4jLogger.log(marker, wrapperClassName, level, msg, null, throwable)
