@@ -21,7 +21,7 @@ trait LoggingUtilities {
      *       .filter(4 <).trace("After filtering")
      *       .size.trace("Size")
      *
-     * The default logging method invoked is LOgger#debug. It is easy to invoke other logging methods instead, if
+     * The default logging method invoked is Logger#debug. It is easy to invoke other logging methods instead, if
      * so required.
      *
      * Example:
