@@ -23,5 +23,5 @@ trait Logging {
   /**
    * Logger for the type mixed into.
    */
-  protected[slf4s] lazy val logger = Logger(this.getClass)
+  protected[slf4s] implicit lazy val logger = Logger(this.getClass)
 }

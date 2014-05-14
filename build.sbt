@@ -13,6 +13,7 @@ crossScalaVersions := Seq(
     "2.9.0-1",
     "2.9.1")
 
+	
 libraryDependencies ++= Seq(
     "org.slf4j" % "slf4j-api" % "1.6.1")
 
